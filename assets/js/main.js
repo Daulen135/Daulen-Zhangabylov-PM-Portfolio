@@ -262,3 +262,75 @@
   });
 
 })()
+
+
+
+function saveComment(event) {
+  event.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value;
+
+  // Create a comment object
+  const comment = {
+    name: name,
+    email: email,
+    subject: subject,
+    message: message
+  };
+
+  // Retrieve existing comments from local storage
+  const existingComments = JSON.parse(localStorage.getItem('comments')) || [];
+
+  // Add the new comment to the existing comments
+  existingComments.push(comment);
+
+  // Store the updated comments in local storage
+  localStorage.setItem('comments', JSON.stringify(existingComments));
+
+  // Clear the form fields
+  document.getElementById('name').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('subject').value = '';
+  document.getElementById('message').value = '';
+
+  // Reload the comments
+  displayComments();
+}
+
+function displayComments() {
+  const commentsContainer = document.getElementById('comments-container');
+  const comments = JSON.parse(localStorage.getItem('comments')) || [];
+
+  // Clear existing comments
+  commentsContainer.innerHTML = '';
+
+  // Display each comment
+  comments.forEach(comment => {
+    const commentElement = document.createElement('div');
+    commentElement.innerHTML = `
+      <strong>${comment.name}</strong><br>
+      <em>${comment.email}</em><br>
+      <strong>Subject: ${comment.subject}</strong><br>
+      <p>${comment.message}</p>
+      <hr>
+    `;
+    commentsContainer.appendChild(commentElement);
+  });
+}
+
+// Display existing comments on page load
+window.addEventListener('load', () => {
+  displayComments();
+});
+
+function clearComments() {
+  // Clear comments from local storage
+  localStorage.removeItem('comments');
+
+  // Clear the comments container on the page
+  const commentsContainer = document.getElementById('comments-container');
+  commentsContainer.innerHTML = '';
+}

@@ -460,6 +460,14 @@ section {
   font-family: "Raleway", sans-serif;
   font-size: 14px;
 }
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding-left: 20px; /* You can adjust this value to move the content inside the LI to the right */
+}
 
 /*--------------------------------------------------------------
 # Akills
